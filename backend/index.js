@@ -24,14 +24,16 @@ app.get("/",(req,res)=>{
 const storage = multer.diskStorage({
     destination: './upload/images',
     filename:(req,file,cb)=>{
-        return cb(null, `${file.fieldname}${Date.now()}_${path.extname(file.originalname)}`);
+        return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
     }
 })
 
 const upload = multer({storage:storage});
 app.use('/images',express.static('upload/images'));
+
 //Creating Upload Endpoint for images
 app.post("/upload",upload.single('product'),(req,res)=>{
+    console.log('File received:', req.file);
    res.json({
        success:1,
        image_url:`http://localhost:${port}/images/${req.file.filename}`,
@@ -111,6 +113,13 @@ app.post('/removeproduct',async (req,res)=>{
         success:true,
         name:req.body.name
     })
+})
+
+//Creating API getting all products
+app.get('/allproducts',async(req,res)=>{
+    let products = await Product.find({});
+    console.log("All Products Fetched");
+    res.send(products);
 })
 
 app.listen(port,(error)=>{

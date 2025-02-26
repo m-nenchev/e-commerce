@@ -49,6 +49,7 @@
 .loginsignup-login span{
     color: #ff4141;
     font-weight: 600;
+    cursor: pointer;
 }
 .loginsignup-agree{
     display: flex;
@@ -84,6 +85,7 @@
     }
     .loginsignup-login{
         font-size: 16px;
+        cursor: pointer;
     }
     .loginsignup-agree{
         font-size: 14px;
